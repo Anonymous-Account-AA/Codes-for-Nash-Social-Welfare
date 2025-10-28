@@ -1,3 +1,7 @@
+% Description: 
+% To check the approximation ratio of 3.56, run the following code.
+% To check the upper bound of the integrality gap 3.45, first comment lines 92, 136, 139, and then uncomment lines 91, 135, 138.
+
 digits(32);
 tic
 function ret = solve_ratio(mu_l, mu_r, lprec, xprec, dl, dr, kl, kr, alpha_l, alpha_r)
@@ -84,8 +88,8 @@ function ret = search(mu_l, mu_r, kl, kr, alpha_l, alpha_r, step)
         fprintf("search %d %d %d %d %d %d %d\n", mu_l, mu_r, kl, kr, alpha_l, alpha_r, ans1);
     end
     
-    limit = log(3.3); % check to see if any point in the range exceeds limit
-    %limit = log(3.55);
+    %limit = log(3.3); % check to see if any point in the range exceeds limit (for integrality gap)
+    limit = log(3.55); % range exceeds limit for rounding algorithm
     if ans1 <= limit
         ret = ans1;
         return;
@@ -128,13 +132,16 @@ e = exp(1.0);
 
 
 mu_l = 1;
-mu_r = 1000;
+% mu_r = 1000; % parameter of mu for the integrality gap
+mu_r = 360000; % parameter of mu for the rounding algorithm
 kl = 1;
-kr = 30000;
+% kr = 30000; % parameter of k for the integrality gap
+kr = 20000000; % parameter of k for the rounding algorithm
 alpha_l = 0;
 alpha_r = 0;
 
 realans = search(mu_l, mu_r, kl, kr, alpha_l, alpha_r, 1);
 
 disp(realans);
+
 toc
